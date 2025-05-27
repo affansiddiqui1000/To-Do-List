@@ -1,8 +1,8 @@
 const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
 
-function addTask(){
-    if(inputBox.value === ''){
+const addTask = () => {
+    if(inputBox.value.trim() === ''){
         alert("You must write something");
     }
     else{
@@ -17,7 +17,13 @@ function addTask(){
     saveData();
 }
 
-listContainer.addEventListener("click", function(e){
+inputBox.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        addTask();
+    }
+});
+
+listContainer.addEventListener("click", (e) => {
     if(e.target.tagName === "LI"){
         e.target.classList.toggle("checked");
         saveData();
@@ -28,10 +34,10 @@ listContainer.addEventListener("click", function(e){
     }
 }, false);
 
-function saveData(){
+const saveData = () => {
     localStorage.setItem("data", listContainer.innerHTML);
 }
-function showTask(){
+const showTask = () => {
     listContainer.innerHTML = localStorage.getItem("data");
 }
 showTask();
